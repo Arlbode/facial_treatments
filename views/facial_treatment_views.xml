@@ -10,9 +10,10 @@
                             attrs="{'invisible': [('state', '!=', 'draft')]}"
                             class="oe_highlight"/>
                     <button name="action_cancel" type="object" string="Cancelar"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}/>
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
+
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
@@ -27,8 +28,9 @@
                             <field name="notes" placeholder="Ej: Piel sensible, reacción a vitamina C..."/>
                         </group>
                     </group>
+
                     <label for="product_ids" string="Productos Usados"/>
-                    <field name="product_ids" widget="many2many_tags" string="Productos Usados"/>
+                    <field name="product_ids" widget="many2many_tags"/>
                 </sheet>
             </form>
         </field>
