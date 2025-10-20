@@ -1,0 +1,59 @@
+<odoo>
+    <record id="view_facial_treatment_form" model="ir.ui.view">
+        <field name="name">facial.treatment.form</field>
+        <field name="model">facial.treatment</field>
+        <field name="arch" type="xml">
+            <form string="Tratamiento Facial">
+                <header>
+                    <button name="action_done" type="object" string="Completar" 
+                            states="draft" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancelar" 
+                            states="draft" />
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="date"/>
+                            <field name="next_appointment"/>
+                        </group>
+                        <group>
+                            <field name="notes" placeholder="Ej: Piel sensible, reacción a vitamina C..."/>
+                        </group>
+                    </group>
+                    <label for="product_ids"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_facial_treatment_tree" model="ir.ui.view">
+        <field name="name">facial.treatment.tree</field>
+        <field name="model">facial.treatment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="next_appointment"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_facial_treatment" model="ir.actions.act_window">
+        <field name="name">Tratamientos Faciales</field>
+        <field name="res_model">facial.treatment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_facial_treatment_root" name="Tratamientos Faciales" sequence="10"/>
+    <menuitem id="menu_facial_treatment" name="Tratamientos" 
+              parent="menu_facial_treatment_root" 
+              action="action_facial_treatment"/>
+</odoo>
