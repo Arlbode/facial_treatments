@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_facial_treatment_form" model="ir.ui.view">
         <field name="name">facial.treatment.form</field>
@@ -5,10 +6,11 @@
         <field name="arch" type="xml">
             <form string="Tratamiento Facial">
                 <header>
-                    <button name="action_done" type="object" string="Completar" 
-                            states="draft" class="oe_highlight"/>
-                    <button name="action_cancel" type="object" string="Cancelar" 
-                            states="draft" />
+                    <button name="action_done" type="object" string="Completar"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancelar"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -17,7 +19,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="partner_id" domain="[('customer_rank', '>', 0)]" options="{'no_create': True}"/>
                             <field name="date"/>
                             <field name="next_appointment"/>
                         </group>
@@ -25,8 +27,8 @@
                             <field name="notes" placeholder="Ej: Piel sensible, reacción a vitamina C..."/>
                         </group>
                     </group>
-                    <label for="product_ids"/>
-                    <field name="product_ids" widget="many2many_tags"/>
+                    <label for="product_ids" string="Productos Usados"/>
+                    <field name="product_ids" widget="many2many_tags" string="Productos Usados"/>
                 </sheet>
             </form>
         </field>
@@ -36,7 +38,7 @@
         <field name="name">facial.treatment.tree</field>
         <field name="model">facial.treatment</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-success="state == 'done'" decoration-muted="state == 'cancel'">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="date"/>
@@ -46,14 +48,25 @@
         </field>
     </record>
 
+    <record id="view_facial_treatment_calendar" model="ir.ui.view">
+        <field name="name">facial.treatment.calendar</field>
+        <field name="model">facial.treatment</field>
+        <field name="arch" type="xml">
+            <calendar string="Próximas Citas" date_start="next_appointment" color="partner_id">
+                <field name="name"/>
+                <field name="partner_id"/>
+            </calendar>
+        </field>
+    </record>
+
     <record id="action_facial_treatment" model="ir.actions.act_window">
         <field name="name">Tratamientos Faciales</field>
         <field name="res_model">facial.treatment</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,calendar</field>
     </record>
 
     <menuitem id="menu_facial_treatment_root" name="Tratamientos Faciales" sequence="10"/>
-    <menuitem id="menu_facial_treatment" name="Tratamientos" 
-              parent="menu_facial_treatment_root" 
+    <menuitem id="menu_facial_treatment" name="Tratamientos"
+              parent="menu_facial_treatment_root"
               action="action_facial_treatment"/>
 </odoo>
