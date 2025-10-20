@@ -35,7 +35,7 @@ class FacialTreatment(models.Model):
         self.write({'state': 'done'})
 
     def action_cancel(self):
-        self.write({'state': 'cancel'})
+        self.write({'state': 'cancel', 'next_appointment': False})
 
 
 class ResPartner(models.Model):
