@@ -10,7 +10,7 @@
                             attrs="{'invisible': [('state', '!=', 'draft')]}"
                             class="oe_highlight"/>
                     <button name="action_cancel" type="object" string="Cancelar"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}/>
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
