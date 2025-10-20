@@ -3,7 +3,7 @@
     'version': '1.0',
     'category': 'Sales',
     'summary': 'Gestión de tratamientos faciales por cliente',
-    'description': 'Registra historial de tratamientos, productos usados y próximas citas.',
+    'description': 'Registra historial de tratamientos, productos usados y próximas citas. Además, permite agendar citas en el calendario.',
     'author': 'VitalSkin',
     'depends': ['sale', 'product', 'calendar'],
     'data': [

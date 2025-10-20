@@ -6,6 +6,9 @@
         <field name="arch" type="xml">
             <form string="Tratamiento Facial">
                 <header>
+                    <button name="action_schedule_appointment" type="object" string="Agendar Cita"
+                            attrs="{'invisible': ['|', ('state', '!=', 'done'), ('next_appointment', '=', False)]}"
+                            class="oe_highlight"/>
                     <button name="action_done" type="object" string="Completar"
                             attrs="{'invisible': [('state', '!=', 'draft')]}"
                             class="oe_highlight"/>

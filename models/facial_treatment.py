@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 class FacialTreatment(models.Model):
     _name = 'facial.treatment'
@@ -36,6 +37,24 @@ class FacialTreatment(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancel', 'next_appointment': False})
+
+    def action_schedule_appointment(self):
+        self.ensure_one()
+        if self.next_appointment:
+            event = self.env['calendar.event'].create({
+                'name': f'Cita de seguimiento para {self.partner_id.name}',
+                'start': self.next_appointment,
+                'stop': self.next_appointment + timedelta(hours=1),
+                'partner_ids': [(4, self.partner_id.id)],
+            })
+            self.message_post(body=f'Se ha agendado una cita para el {self.next_appointment}.')
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'calendar.event',
+                'view_mode': 'form',
+                'res_id': event.id,
+                'target': 'new',
+            }
 
 
 class ResPartner(models.Model):
